@@ -83,6 +83,18 @@ describe('Service: Facebook', function () {
       expect(facebook.isReady()).toBe(true);
     });
 
+    it('isReadyPromise should return a promise that will be resolved eventually', function() {
+      var flag = false;
+
+      facebook.isReadyPromise().then(function() {
+        flag = true;
+      });
+
+      $timeout.flush();
+
+      expect(flag).toBe(true);
+    });
+
     it('should broadcast on $rootScope when facebook event is emitted', inject(function($rootScope) {
       spyOn($rootScope, '$broadcast');
       var cbFn = function() {};
